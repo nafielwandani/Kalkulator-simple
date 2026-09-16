@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Math</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body id="mode">
+<div class="hero">
+<h1>Two Number Calculator</h1>
+<h3>Enter Two Numbers And Choose An Operation</h3>
+
+
+<div class="number1">
+<h3>First Number</h3>
+<input type="number" id="angkapertama">
+</div>
+<div class="number2">
+<h3>Second Number</h3>
+
+<input type="number" id="angkakedua">
+</div>
+<br> <br>
+<h2>Choose Operation</h2>
+<div class="opr">
+<button onclick="tambah()">+ <br> tambah</button>
+<button onclick="kurang()">- <br> kurang</button>
+<button onclick="kali()">* <br> kali</button>
+<button onclick="bagi()">/ <br> bagi</button>
+<button onclick="modul()">% <br> Modul</button>
+</div>
+<br><br>
+
+<h1>Result</h1>
+<div id="hasil" class="hasil">
+    
+</div>
+
+<br><br>
+
+<div class="mode">
+
+<button type="button" onclick="darkMode()">Dark Mode</button>
+<button type="button" onclick="lightMode()">Light Mode</button>
+</div>
+
+</div>
+    <script src="main.js"></script>
+
+    </body>
+</html>

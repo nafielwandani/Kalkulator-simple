@@ -1,0 +1,98 @@
+*{
+  margin: 0;
+  padding: 0;
+ 
+  scroll-behavior: smooth;
+}
+
+.hero{
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 5px solid;
+    border-color: black;
+    border-radius: 20px;
+    background-color: rgb(179, 222, 222);
+    padding: 20px;
+    width: 600px;
+
+}
+
+.hero h1{
+margin-top: 20px;
+}
+.hero h3{
+    margin-top: 5px;
+}
+
+.number1{
+   
+   margin-top: 20px;
+   text-align: left;
+}
+.number2{
+    margin-top: 20px;
+    text-align: left;
+}
+.number1 input{
+    text-align: center;
+    width: 600px;
+    height: 40px;
+    font-size: 20px;
+    border: 3px solid;
+    border-color: black;
+    border-radius: 10px;
+}
+.number2 input{
+  text-align: center;
+    width: 600px;
+    height: 40px;
+    font-size: 20px;
+    border: 3px solid;
+    border-color: black;
+    border-radius: 10px;
+}
+
+.opr button{
+font-size: 20px;
+    margin-top: 20px;
+    height: 100px;
+    width: 100px;
+padding: 10px;
+background-color: azure;
+border: 3px solid;
+border-color: rgb(199, 240, 244);
+}
+
+.hasil{
+    color: black;
+    margin-top: 10px;
+    margin: auto;
+    text-align: center;
+    font-size: 40px;
+    background-color: white;
+    padding: 20px;
+    width: 200px;
+    height: 50px;
+    border: 3px solid;
+    border-color: black;
+    border-radius: 5px;
+}
+
+.darkmode  .hero{
+    transition: 0.5s;
+    color: aliceblue;
+ background-color:darkslategray;
+ border-color: black;
+}
+
+.mode button{
+    height: 50px;
+    width: 100px;
+    border: 3px solid;
+    border-color: black;
+    border-radius: 10px;
+}

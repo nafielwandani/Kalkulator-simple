@@ -1,98 +1,518 @@
-*{
+/* ==========================================================
+   Simple Math — Two Number Calculator
+   Tema: teal laguna + kuningan, ornamen art-deco
+   ========================================================== */
+
+/* ---------- Warna (mode terang) ---------- */
+body {
+  --bg: #d9ebe7;
+  --bg-glow: #f0f9f6;
+  --card: #f7fcfb;
+  --field: #ffffff;
+  --ink: #0e3534;
+  --ink-soft: #3d6462;
+  --brass: #a9844b;
+  --brass-soft: #cdae76;
+  --line: rgba(169, 132, 75, 0.55);
+  --focus: #14595a;
+  --press-bg: #14595a;
+  --on-accent: #f4faf8;
+  --plaque-bg: #0b3d3e;
+  --plaque-ink: #f0dcae;
+  --shadow: 0 34px 60px -30px rgba(11, 61, 62, 0.5),
+            0 1px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+/* ---------- Warna (mode gelap) ---------- */
+body.darkmode {
+  --bg: #061f20;
+  --bg-glow: #0c3435;
+  --card: #0c3435;
+  --field: #08292a;
+  --ink: #e8f2ef;
+  --ink-soft: #a9c6c1;
+  --brass: #d1b073;
+  --brass-soft: #e6cf98;
+  --line: rgba(209, 176, 115, 0.5);
+  --focus: #e6cf98;
+  --press-bg: #d1b073;
+  --on-accent: #082526;
+  --plaque-bg: #041718;
+  --plaque-ink: #f0dcae;
+  --shadow: 0 34px 60px -30px rgba(0, 0, 0, 0.75),
+            0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+/* ---------- Dasar ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
   margin: 0;
   padding: 0;
- 
+}
+
+html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-.hero{
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    border: 5px solid;
-    border-color: black;
-    border-radius: 20px;
-    background-color: rgb(179, 222, 222);
-    padding: 20px;
-    width: 600px;
-
+body {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem) 1rem;
+  overflow-x: hidden;
+  font-family: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image: radial-gradient(ellipse 90% 60% at 50% 0%, var(--bg-glow), transparent 70%);
+  background-attachment: fixed;
+  transition: background-color 0.5s, color 0.5s;
 }
 
-.hero h1{
-margin-top: 20px;
-}
-.hero h3{
-    margin-top: 5px;
+button {
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
-.number1{
-   
-   margin-top: 20px;
-   text-align: left;
+/* ---------- Dekorasi latar ---------- */
+
+/* Pola kipas art-deco, memudar ke arah tengah supaya kartu tetap bersih */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23b8925a' stroke-width='1'%3E%3Cpath d='M16 24a8 8 0 0 1 16 0M8 24a16 16 0 0 1 32 0M0 24a24 24 0 0 1 48 0'/%3E%3Cpath d='M8 0A8 8 0 0 1 0 8M16 0A16 16 0 0 1 0 16M24 0A24 24 0 0 1 0 24'/%3E%3Cpath d='M48 8A8 8 0 0 1 40 0M48 16A16 16 0 0 1 32 0M48 24A24 24 0 0 1 24 0'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 48px 24px;
+  opacity: 0.2;
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 50%, transparent 30%, #000 100%);
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 50%, transparent 30%, #000 100%);
 }
-.number2{
-    margin-top: 20px;
-    text-align: left;
+
+/* Simbol operasi raksasa di belakang kartu */
+.decor {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
-.number1 input{
-    text-align: center;
-    width: 600px;
-    height: 40px;
-    font-size: 20px;
-    border: 3px solid;
-    border-color: black;
-    border-radius: 10px;
+
+.decor span {
+  position: absolute;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  line-height: 1;
+  font-size: clamp(6rem, 20vw, 15rem);
+  color: var(--brass);
+  opacity: 0.13;
+  user-select: none;
 }
-.number2 input{
+
+.decor .s1 { top: 3%;     left: 4%;   transform: rotate(-10deg); }
+.decor .s2 { top: 8%;     right: 5%;  transform: rotate(9deg); }
+.decor .s3 { bottom: 4%;  left: 8%;   transform: rotate(7deg); }
+.decor .s4 { bottom: 10%; right: 7%;  transform: rotate(-7deg); }
+.decor .s5 { top: 42%;    left: -3%;  transform: rotate(-4deg); }
+
+/* ---------- Kartu utama ---------- */
+.hero {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 34rem);
+  margin: 0 auto;
+  padding: clamp(2.25rem, 6vw, 3rem) clamp(1.25rem, 5vw, 2.75rem) clamp(1.75rem, 5vw, 2.5rem);
   text-align: center;
-    width: 600px;
-    height: 40px;
-    font-size: 20px;
-    border: 3px solid;
-    border-color: black;
-    border-radius: 10px;
+  background: var(--card);
+  border: 1px solid var(--brass);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  transition: background-color 0.5s, border-color 0.5s, box-shadow 0.5s;
 }
 
-.opr button{
-font-size: 20px;
-    margin-top: 20px;
-    height: 100px;
-    width: 100px;
-padding: 10px;
-background-color: azure;
-border: 3px solid;
-border-color: rgb(199, 240, 244);
+/* Bingkai kedua di dalam kartu */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  pointer-events: none;
 }
 
-.hasil{
-    color: black;
-    margin-top: 10px;
-    margin: auto;
-    text-align: center;
-    font-size: 40px;
-    background-color: white;
-    padding: 20px;
-    width: 200px;
-    height: 50px;
-    border: 3px solid;
-    border-color: black;
-    border-radius: 5px;
+/* Ornamen kipas di empat sudut bingkai */
+.corner {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  color: var(--brass);
+  pointer-events: none;
 }
 
-.darkmode  .hero{
-    transition: 0.5s;
-    color: aliceblue;
- background-color:darkslategray;
- border-color: black;
+.corner.tl { top: 8px;    left: 8px; }
+.corner.tr { top: 8px;    right: 8px;  transform: scaleX(-1); }
+.corner.bl { bottom: 8px; left: 8px;   transform: scaleY(-1); }
+.corner.br { bottom: 8px; right: 8px;  transform: rotate(180deg); }
+
+/* ---------- Kepala ---------- */
+.crest {
+  display: block;
+  width: 7.5rem;
+  height: auto;
+  margin: 0 auto 0.5rem;
+  color: var(--brass);
+  overflow: visible;
 }
 
-.mode button{
-    height: 50px;
-    width: 100px;
-    border: 3px solid;
-    border-color: black;
-    border-radius: 10px;
+.crest path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: gambar 1.2s ease-out backwards;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+@keyframes gambar {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.hero h1 {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+.sub {
+  max-width: 26rem;
+  margin: 0.6rem auto 0;
+  font-weight: 400;
+  color: var(--ink-soft);
+  text-wrap: balance;
+}
+
+/* ---------- Input ---------- */
+.fields {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+@media (min-width: 30rem) {
+  .fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.fields label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.number1 input,
+.number2 input {
+  width: 100%;
+  height: 3.4rem;
+  padding: 0 0.9rem;
+  text-align: center;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--ink);
+  background: var(--field);
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  transition: border-color 0.2s, background-color 0.5s, color 0.5s;
+}
+
+.number1 input::placeholder,
+.number2 input::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.45;
+}
+
+.number1 input::-webkit-outer-spin-button,
+.number1 input::-webkit-inner-spin-button,
+.number2 input::-webkit-outer-spin-button,
+.number2 input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number1 input:focus,
+.number2 input:focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-color: var(--focus);
+}
+
+/* ---------- Pemisah berhias ---------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.4rem 0 1.25rem;
+  color: var(--brass);
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor);
+  opacity: 0.75;
+}
+
+.divider::after {
+  transform: scaleX(-1);
+}
+
+.divider i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+/* ---------- Judul bagian ---------- */
+.hero h2 {
+  margin-bottom: 1rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+/* ---------- Tombol operasi ---------- */
+.opr {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.opr button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  min-height: 4.6rem;
+  padding: 0.5rem 0.25rem;
+  color: var(--ink);
+  background: var(--field);
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.12s;
+}
+
+.opr .lambang {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.opr .nama {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  transition: color 0.2s;
+}
+
+.opr button:active {
+  transform: scale(0.96);
+}
+
+.opr button.active {
+  color: var(--on-accent);
+  background: var(--press-bg);
+  border-color: var(--press-bg);
+}
+
+.opr button.active .nama {
+  color: inherit;
+}
+
+@media (hover: hover) {
+  .opr button:hover {
+    color: var(--on-accent);
+    background: var(--press-bg);
+    border-color: var(--press-bg);
+  }
+
+  .opr button:hover .nama {
+    color: inherit;
+  }
+}
+
+.opr button:focus-visible,
+.segmen button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* Layar sempit: 3 tombol di baris atas, 2 tombol lebar di bawahnya */
+@media (max-width: 27rem) {
+  .opr {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .opr button {
+    grid-column: span 2;
+    min-height: 4.2rem;
+  }
+
+  .opr button:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+}
+
+/* ---------- Hasil: plakat kuningan dengan sudut terpotong ---------- */
+.plaque {
+  --chamfer: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--brass-soft), var(--brass) 50%, var(--brass-soft));
+  clip-path: polygon(
+    var(--chamfer) 0, calc(100% - var(--chamfer)) 0,
+    100% var(--chamfer), 100% calc(100% - var(--chamfer)),
+    calc(100% - var(--chamfer)) 100%, var(--chamfer) 100%,
+    0 calc(100% - var(--chamfer)), 0 var(--chamfer)
+  );
+}
+
+.hasil {
+  --c: calc(var(--chamfer, 16px) - 1.2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 5.25rem;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 9vw, 3.1rem);
+  line-height: 1.1;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--plaque-ink);
+  background: var(--plaque-bg);
+  clip-path: polygon(
+    var(--c) 0, calc(100% - var(--c)) 0,
+    100% var(--c), 100% calc(100% - var(--c)),
+    calc(100% - var(--c)) 100%, var(--c) 100%,
+    0 calc(100% - var(--c)), 0 var(--c)
+  );
+  transition: background-color 0.5s;
+}
+
+.hasil:empty::before {
+  content: "0";
+  opacity: 0.4;
+}
+
+.hasil.galat {
+  font-family: "Jost", system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+.hasil.pop {
+  animation: muncul 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes muncul {
+  from { transform: scale(0.96); opacity: 0.4; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* ---------- Tombol mode ---------- */
+.mode {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.segmen {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+  max-width: 20rem;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.segmen button {
+  flex: 1;
+  min-height: 2.75rem;
+  padding: 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.segmen button[aria-pressed="true"] {
+  color: var(--on-accent);
+  background: var(--press-bg);
+}
+
+@media (hover: hover) {
+  .segmen button[aria-pressed="false"]:hover {
+    color: var(--ink);
+  }
+}
+
+/* ---------- Layar sangat kecil ---------- */
+@media (max-width: 22rem) {
+  .hero::before {
+    inset: 6px;
+  }
+
+  .corner.tl { top: 6px;    left: 6px; }
+  .corner.tr { top: 6px;    right: 6px; }
+  .corner.bl { bottom: 6px; left: 6px; }
+  .corner.br { bottom: 6px; right: 6px; }
+}
+
+/* ---------- Hormati preferensi kurangi gerakan ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

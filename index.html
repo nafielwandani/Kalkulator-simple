@@ -4,49 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Math</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 <body id="mode">
-<div class="hero">
-<h1>Two Number Calculator</h1>
-<h3>Enter Two Numbers And Choose An Operation</h3>
 
-
-<div class="number1">
-<h3>First Number</h3>
-<input type="number" id="angkapertama">
-</div>
-<div class="number2">
-<h3>Second Number</h3>
-
-<input type="number" id="angkakedua">
-</div>
-<br> <br>
-<h2>Choose Operation</h2>
-<div class="opr">
-<button onclick="tambah()">+ <br> tambah</button>
-<button onclick="kurang()">- <br> kurang</button>
-<button onclick="kali()">* <br> kali</button>
-<button onclick="bagi()">/ <br> bagi</button>
-<button onclick="modul()">% <br> Modul</button>
-</div>
-<br><br>
-
-<h1>Result</h1>
-<div id="hasil" class="hasil">
-    
+<!-- Dekorasi latar: simbol operasi berukuran besar -->
+<div class="decor" aria-hidden="true">
+    <span class="s1">+</span>
+    <span class="s2">÷</span>
+    <span class="s3">×</span>
+    <span class="s4">−</span>
+    <span class="s5">%</span>
 </div>
 
-<br><br>
+<!-- Ornamen sudut (dipakai ulang 4x lewat <use>) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+        <g id="corner-fan" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+            <path d="M8.5 .5A8 8 0 0 1 .5 8.5"/>
+            <path d="M16.5 .5A16 16 0 0 1 .5 16.5"/>
+            <path d="M.5 .5L12 12"/>
+        </g>
+    </defs>
+</svg>
 
-<div class="mode">
+<main class="container hero">
 
-<button type="button" onclick="darkMode()">Dark Mode</button>
-<button type="button" onclick="lightMode()">Light Mode</button>
-</div>
+    <svg class="corner tl" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#corner-fan"/></svg>
+    <svg class="corner tr" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#corner-fan"/></svg>
+    <svg class="corner bl" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#corner-fan"/></svg>
+    <svg class="corner br" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#corner-fan"/></svg>
 
-</div>
-    <script src="main.js"></script>
+    <header>
+        <!-- Mahkota art-deco: digambar sekali saat halaman dibuka -->
+        <svg class="crest" viewBox="0 0 120 68" aria-hidden="true" focusable="false">
+            <path pathLength="1" style="--i:0" d="M4 62H116"/>
+            <path pathLength="1" style="--i:1" d="M44 62A16 16 0 0 1 76 62"/>
+            <path pathLength="1" style="--i:2" d="M32 62A28 28 0 0 1 88 62"/>
+            <path pathLength="1" style="--i:3" d="M20 62A40 40 0 0 1 100 62"/>
+            <path pathLength="1" style="--i:4" d="M45.22 55.88L23.04 46.69"/>
+            <path pathLength="1" style="--i:5" d="M48.69 50.69L31.72 33.72"/>
+            <path pathLength="1" style="--i:6" d="M53.88 47.22L44.69 25.04"/>
+            <path pathLength="1" style="--i:7" d="M60 46V22"/>
+            <path pathLength="1" style="--i:6" d="M66.12 47.22L75.31 25.04"/>
+            <path pathLength="1" style="--i:5" d="M71.31 50.69L88.28 33.72"/>
+            <path pathLength="1" style="--i:4" d="M74.78 55.88L96.96 46.69"/>
+            <path pathLength="1" style="--i:8" d="M60 57.5L64.5 62L60 66.5L55.5 62Z"/>
+            <path pathLength="1" style="--i:8" d="M60 9L63 13L60 17L57 13Z"/>
+        </svg>
+        <h1>Two Number Calculator</h1>
+        <p class="sub">Enter Two Numbers And Choose An Operation</p>
+    </header>
 
-    </body>
+    <section class="fields">
+        <div class="number1">
+            <label for="angkapertama">First Number</label>
+            <input type="number" id="angkapertama" placeholder="0" step="any">
+        </div>
+        <div class="number2">
+            <label for="angkakedua">Second Number</label>
+            <input type="number" id="angkakedua" placeholder="0" step="any">
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"><i></i></div>
+
+    <section aria-labelledby="judul-operasi">
+        <h2 id="judul-operasi">Choose Operation</h2>
+        <div class="opr">
+            <button type="button" data-op="tambah" onclick="tambah()"><span class="lambang" aria-hidden="true">+</span><span class="nama">tambah</span></button>
+            <button type="button" data-op="kurang" onclick="kurang()"><span class="lambang" aria-hidden="true">−</span><span class="nama">kurang</span></button>
+            <button type="button" data-op="kali" onclick="kali()"><span class="lambang" aria-hidden="true">×</span><span class="nama">kali</span></button>
+            <button type="button" data-op="bagi" onclick="bagi()"><span class="lambang" aria-hidden="true">÷</span><span class="nama">bagi</span></button>
+            <button type="button" data-op="modul" onclick="modul()"><span class="lambang" aria-hidden="true">%</span><span class="nama">modul</span></button>
+        </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"><i></i></div>
+
+    <section aria-labelledby="judul-hasil">
+        <h2 id="judul-hasil">Result</h2>
+        <div class="plaque">
+            <div id="hasil" class="hasil" role="status"></div>
+        </div>
+    </section>
+
+    <div class="mode">
+        <div class="segmen" role="group" aria-label="Theme">
+            <button type="button" id="btn-dark" aria-pressed="false" onclick="darkMode()">Dark Mode</button>
+            <button type="button" id="btn-light" aria-pressed="true" onclick="lightMode()">Light Mode</button>
+        </div>
+    </div>
+
+</main>
+
+<script src="main.js"></script>
+</body>
 </html>
